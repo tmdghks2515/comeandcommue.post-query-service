@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="io.comeandcommue.post_query_service.domain.PostQueryRepository">
+
+    <select id="findRecentPosts" resultType="io.comeandcommue.post_query_service.domain.PostDto">
+        SELECT
+            id,
+            post_no,
+            title,
+            category_name,
+            link_href,
+            thumbnail_src,
+            author_name,
+            has_img,
+            like_count,
+            view_count,
+            comment_count,
+            community_type,
+            posted_at,
+            created_at
+        FROM post
+
+        <where>
+            1 = 1
+            <!-- communityType List -->
+            <if test="communityTypes != null and communityTypes.size > 0">
+                AND community_type IN
+                <foreach item="type" collection="communityTypes" open="(" separator="," close=")">
+                    #{type}
+                </foreach>
+            </if>
+
+            <!-- Cursor 조건 -->
+            <if test="lastCreatedAt != null">
+                AND created_at &lt; #{lastCreatedAt}
+            </if>
+        </where>
+
+        ORDER BY created_at DESC
+        LIMIT #{pageSize}
+    </select>
+
+</mapper>
