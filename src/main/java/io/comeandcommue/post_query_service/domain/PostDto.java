@@ -22,6 +22,7 @@ public class PostDto {
     private Integer viewCount;
     private Integer commentCount;
     private String communityType;
+    private String communityTypeLabel;
     private LocalDateTime postedAt;
     private LocalDateTime createdAt;
 }
