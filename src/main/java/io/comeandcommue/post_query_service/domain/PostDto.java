@@ -17,12 +17,11 @@ public class PostDto {
     private String linkHref;
     private String thumbnailSrc;
     private String authorName;
-    private boolean hasImg;
     private Integer likeCount;
     private Integer viewCount;
     private Integer commentCount;
     private String communityType;
-    private String communityTypeLabel;
+//    private String communityTypeLabel;
     private LocalDateTime postedAt;
     private LocalDateTime createdAt;
 }

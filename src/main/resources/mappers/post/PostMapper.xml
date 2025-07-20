@@ -14,7 +14,6 @@
             link_href,
             thumbnail_src,
             author_name,
-            has_img,
             like_count,
             view_count,
             comment_count,
