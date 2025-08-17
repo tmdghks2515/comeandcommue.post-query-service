@@ -15,8 +15,7 @@
             thumbnail_src,
             author_name,
             like_count,
-            view_count,
-            comment_count,
+            hit_count,
             community_type,
             posted_at,
             created_at
