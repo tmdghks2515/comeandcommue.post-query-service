@@ -5,27 +5,46 @@
 
 <mapper namespace="io.comeandcommue.post_query_service.domain.PostQueryRepository">
 
-    <select id="findRecentPosts" resultType="io.comeandcommue.post_query_service.domain.PostDto">
+    <select id="findRecentPosts"
+            parameterType="map"
+            resultType="io.comeandcommue.post_query_service.domain.PostDto">
         SELECT
-            id,
-            post_no,
-            title,
-            category_name,
-            link_href,
-            thumbnail_src,
-            author_name,
-            like_count,
-            hit_count,
-            community_type,
-            posted_at,
-            created_at
-        FROM post
+        p.id,
+        p.post_no,
+        p.title,
+        p.category_name,
+        p.link_href,
+        p.thumbnail_src,
+        p.author_name,
+        p.like_count,
+        p.hit_count,
+        p.community_type,
+
+        <!-- 로그인 상태면 exists로 계산, 아니면 false 고정 -->
+        <choose>
+            <when test="userId != null">
+                EXISTS (
+                SELECT 1
+                FROM post_like pl
+                WHERE pl.post_id = p.id
+                AND pl.user_id = #{userId}
+                ) AS liked,
+            </when>
+            <otherwise>
+                false AS liked,
+            </otherwise>
+        </choose>
+
+        p.posted_at,
+        p.created_at
+        FROM post p
 
         <where>
             1 = 1
-            <!-- communityType List -->
+
+            <!-- communityType List 필터 -->
             <if test="communityTypes != null and communityTypes.size > 0">
-                AND community_type IN
+                AND p.community_type IN
                 <foreach item="type" collection="communityTypes" open="(" separator="," close=")">
                     #{type}
                 </foreach>
@@ -33,11 +52,11 @@
 
             <!-- Cursor 조건 -->
             <if test="lastCreatedAt != null">
-                AND created_at &lt; #{lastCreatedAt}
+                AND p.created_at &lt; #{lastCreatedAt}
             </if>
         </where>
 
-        ORDER BY created_at DESC
+        ORDER BY p.created_at DESC
         LIMIT #{pageSize}
     </select>
 

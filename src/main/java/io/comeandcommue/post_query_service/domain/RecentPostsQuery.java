@@ -13,4 +13,5 @@ public class RecentPostsQuery {
     private List<String> communityTypes;
     private LocalDateTime lastCreatedAt;
     private int pageSize;
+    private String userId;
 }

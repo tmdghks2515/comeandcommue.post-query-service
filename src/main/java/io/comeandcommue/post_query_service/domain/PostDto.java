@@ -20,7 +20,7 @@ public class PostDto {
     private int likeCount;
     private int hitCount;
     private String communityType;
-//    private String communityTypeLabel;
+    private boolean liked;
     private LocalDateTime postedAt;
     private LocalDateTime createdAt;
 }
