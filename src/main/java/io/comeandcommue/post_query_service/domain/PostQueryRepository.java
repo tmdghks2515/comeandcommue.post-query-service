@@ -8,3 +8,4 @@ import java.util.List;
 public interface PostQueryRepository {
     List<PostDto> findRecentPosts(RecentPostsQuery query);
 }
+
