@@ -1,8 +1,8 @@
 package io.comeandcommue.post_query_service.trigger;
 
+import io.comeandcommue.lib.web.loginUser.LoginUser;
+import io.comeandcommue.lib.web.loginUser.UserPrincipal;
 import io.comeandcommue.post_query_service.application.QueryPostUseCase;
-import io.comeandcommue.post_query_service.common.loginUser.LoginUser;
-import io.comeandcommue.post_query_service.common.loginUser.UserPrincipal;
 import io.comeandcommue.post_query_service.domain.PostDto;
 import io.comeandcommue.post_query_service.domain.RecentPostsQuery;
 import lombok.RequiredArgsConstructor;

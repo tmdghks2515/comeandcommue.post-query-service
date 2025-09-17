@@ -1,6 +1,6 @@
 package io.comeandcommue.post_query_service.infrastructure.config;
 
-import io.comeandcommue.post_query_service.common.loginUser.LoginUserArgumentResolver;
+import io.comeandcommue.lib.web.loginUser.LoginUserArgumentResolver;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
