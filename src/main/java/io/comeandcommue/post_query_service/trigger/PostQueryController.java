@@ -1,7 +1,7 @@
 package io.comeandcommue.post_query_service.trigger;
 
 import io.comeandcommue.lib.web.loginUser.LoginUser;
-import io.comeandcommue.lib.web.loginUser.UserPrincipal;
+import io.comeandcommue.lib.web.loginUser.ResolvedLoginUser;
 import io.comeandcommue.post_query_service.application.QueryPostUseCase;
 import io.comeandcommue.post_query_service.domain.PostDto;
 import io.comeandcommue.post_query_service.domain.RecentPostsQuery;
@@ -20,8 +20,8 @@ public class PostQueryController {
     private final QueryPostUseCase queryPostUseCase;
 
     @GetMapping("/recent")
-    public ResponseEntity<List<PostDto>> getRecentPosts(RecentPostsQuery query, @LoginUser UserPrincipal user) {
-        query.setUserId(user.id());
+    public ResponseEntity<List<PostDto>> getRecentPosts(RecentPostsQuery query, @ResolvedLoginUser LoginUser loginUser) {
+        query.setUserId(loginUser.id());
         return ResponseEntity.ok(queryPostUseCase.getRecentPosts(query));
     }
 }
