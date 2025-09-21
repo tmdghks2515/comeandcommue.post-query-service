@@ -1,4 +1,4 @@
-package io.comeandcommue.post_query_service.domain;
+package io.comeandcommue.post_query_service.domain.query;
 
 
 import lombok.Getter;

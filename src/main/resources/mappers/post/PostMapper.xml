@@ -7,7 +7,7 @@
 
     <select id="findRecentPosts"
             parameterType="map"
-            resultType="io.comeandcommue.post_query_service.domain.PostDto">
+            resultType="io.comeandcommue.post_query_service.domain.dto.PostDto">
         SELECT
         p.id,
         p.post_no,
@@ -62,7 +62,7 @@
     </select>
 
     <select id="findById"
-            resultType="io.comeandcommue.post_query_service.domain.PostDto">
+            resultType="io.comeandcommue.post_query_service.domain.dto.PostDto">
         SELECT
             p.id,
             p.post_no,
@@ -96,4 +96,25 @@
         </where>
     </select>
 
+    <select id="countNewPosts"
+            parameterType="map"
+            resultType="io.comeandcommue.post_query_service.domain.dto.PostDto">
+        SELECT
+            COUNT(1)
+        FROM post p
+        <where>
+            1 = 1
+            <!-- communityType List 필터 -->
+            <if test="communityTypes != null and communityTypes.size > 0">
+                AND p.community_type IN
+                <foreach item="type" collection="communityTypes" open="(" separator="," close=")">
+                    #{type}
+                </foreach>
+            </if>
+            <!-- Cursor 조건 -->
+            <if test="lastCreatedAt != null">
+                AND p.created_at &lt; #{lastCreatedAt}
+            </if>
+        </where>
+    </select>
 </mapper>

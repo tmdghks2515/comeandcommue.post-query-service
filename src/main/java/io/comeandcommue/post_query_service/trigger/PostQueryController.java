@@ -3,8 +3,9 @@ package io.comeandcommue.post_query_service.trigger;
 import io.comeandcommue.lib.web.loginUser.LoginUser;
 import io.comeandcommue.lib.web.loginUser.ResolvedLoginUser;
 import io.comeandcommue.post_query_service.application.QueryPostUseCase;
-import io.comeandcommue.post_query_service.domain.PostDto;
-import io.comeandcommue.post_query_service.domain.RecentPostsQuery;
+import io.comeandcommue.post_query_service.domain.dto.PostDto;
+import io.comeandcommue.post_query_service.domain.query.CountNewPostsQuery;
+import io.comeandcommue.post_query_service.domain.query.RecentPostsQuery;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,5 +36,12 @@ public class PostQueryController {
             @ResolvedLoginUser LoginUser loginUser
     ) {
         return ResponseEntity.ok(queryPostUseCase.getPost(id, loginUser.id()));
+    }
+
+    @GetMapping("/new/count")
+    public ResponseEntity<Integer> countNewPosts(
+            CountNewPostsQuery query
+    ) {
+        return ResponseEntity.ok(queryPostUseCase.countNewPosts(query));
     }
 }
