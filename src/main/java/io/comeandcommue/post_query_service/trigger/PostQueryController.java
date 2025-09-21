@@ -8,6 +8,7 @@ import io.comeandcommue.post_query_service.domain.RecentPostsQuery;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -20,8 +21,19 @@ public class PostQueryController {
     private final QueryPostUseCase queryPostUseCase;
 
     @GetMapping("/recent")
-    public ResponseEntity<List<PostDto>> getRecentPosts(RecentPostsQuery query, @ResolvedLoginUser LoginUser loginUser) {
+    public ResponseEntity<List<PostDto>> getRecentPosts(
+            RecentPostsQuery query,
+            @ResolvedLoginUser LoginUser loginUser
+    ) {
         query.setUserId(loginUser.id());
         return ResponseEntity.ok(queryPostUseCase.getRecentPosts(query));
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<PostDto> getPost(
+            @PathVariable String id,
+            @ResolvedLoginUser LoginUser loginUser
+    ) {
+        return ResponseEntity.ok(queryPostUseCase.getPost(id, loginUser.id()));
     }
 }

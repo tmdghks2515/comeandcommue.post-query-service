@@ -61,4 +61,39 @@
         LIMIT #{pageSize}
     </select>
 
+    <select id="findById"
+            resultType="io.comeandcommue.post_query_service.domain.PostDto">
+        SELECT
+            p.id,
+            p.post_no,
+            p.title,
+            p.category_name,
+            p.link_href,
+            p.thumbnail_src,
+            p.author_name,
+            p.comment_count,
+            p.like_count,
+            p.hit_count,
+            p.community_type,
+        <choose>
+            <when test="userId != null">
+                EXISTS (
+                SELECT 1
+                FROM post_like pl
+                WHERE pl.post_id = p.id
+                AND pl.user_id = #{userId}
+                ) AS liked,
+            </when>
+            <otherwise>
+                false AS liked,
+            </otherwise>
+        </choose>
+        p.posted_at,
+        p.created_at
+        FROM post p
+        <where>
+            p.id = #{postId}
+        </where>
+    </select>
+
 </mapper>
