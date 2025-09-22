@@ -52,8 +52,11 @@
             </if>
 
             <!-- Cursor 조건 -->
-            <if test="lastCreatedAt != null">
-                AND p.created_at &lt; #{lastCreatedAt}
+            <if test="createdAtTo != null">
+                AND p.created_at &gt; #{createdAtTo}
+            </if>
+            <if test="createdAtFrom != null">
+                AND p.created_at &lt; #{createdAtFrom}
             </if>
         </where>
 
@@ -98,7 +101,7 @@
 
     <select id="countNewPosts"
             parameterType="map"
-            resultType="io.comeandcommue.post_query_service.domain.dto.PostDto">
+            resultType="int">
         SELECT
             COUNT(1)
         FROM post p
@@ -112,8 +115,8 @@
                 </foreach>
             </if>
             <!-- Cursor 조건 -->
-            <if test="lastCreatedAt != null">
-                AND p.created_at &lt; #{lastCreatedAt}
+            <if test="createdAtTo != null">
+                AND p.created_at &gt; #{createdAtTo}
             </if>
         </where>
     </select>
