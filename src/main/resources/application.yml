@@ -6,8 +6,8 @@ spring:
     name: post-query-service
 
   datasource:
-    url: jdbc:postgresql://localhost:5433/comeandcommue?currentSchema=community
-    username: anan
+    url: jdbc:postgresql://${DB_HOST}:5432/daneyo?currentSchema=community
+    username: ${DB_USERNAME}
     password: ${DB_PASSWORD}
     driver-class-name: org.postgresql.Driver
 
